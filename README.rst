@@ -22,7 +22,7 @@ traceback). Usage is simple as code below
     if __name__ == '__main__':
         # or simply set your own storage
         directory_path = "/path/to/your/log/directory/with/html/tracebacks"
-        exception_hook.enable(storage=FileStorage(directory_path)
+        exception_hook.enable(storage=FileStorage(directory_path))
 
 Installation
 ------------
