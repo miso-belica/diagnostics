@@ -8,13 +8,21 @@ traceback). Usage is simple as code below
 
 .. code-block:: python
 
-    # you have to create "log/" directory next to file that is your main module
-    import diagnostics
+    from diagnostics import exception_hook
 
-    # or simply set your own storage
+    if __name__ == '__main__':
+        # you have to create "log/" directory next to file that is your main module
+        exception_hook.enable()
+
+.. code-block:: python
+
+    from diagnostics import exception_hook
     from diagnostics.storages import FileStorage
-    dignostics.exception_hook.storage = FileStorage(
-        "/path/to/your/log/directory/with/html/tracebacks")
+
+    if __name__ == '__main__':
+        # or simply set your own storage
+        directory_path = "/path/to/your/log/directory/with/html/tracebacks"
+        exception_hook.enable(storage=FileStorage(directory_path)
 
 Installation
 ------------
