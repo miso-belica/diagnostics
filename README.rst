@@ -27,7 +27,12 @@ in diagnostic's exception handler are properly handled and logged
 
 Installation
 ------------
-Currently only from git repo
+From PyPI
+::
+
+    pip install diagnostics
+
+or from git repo
 ::
 
     pip install git+git@github.com:miso-belica/diagnostics.git
