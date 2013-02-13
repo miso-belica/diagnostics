@@ -1,10 +1,11 @@
 ===========
 Diagnostics
 ===========
-Module for logging of detail traceback as HTML page. Unexpected exceptions are
-catched and logged for further audit. Exceptions in diagnostic's exception
-handler are properly handled and logged (but formatted only as standard Python
-traceback). Usage is simple as code below
+Module for logging of `detailed traceback
+<http://miso-belica.github.com/diagnostics/log-example.html>`_ as HTML page.
+Unexpected exceptions are catched and logged for further audit. Exceptions
+in diagnostic's exception handler are properly handled and logged
+(but formatted only as standard Python traceback). Usage is simple as code below
 
 .. code-block:: python
 
