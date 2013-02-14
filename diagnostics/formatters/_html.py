@@ -22,7 +22,7 @@ _TEMPLATE_SKELETON = (
     '</head>'
     '<body>'
         '<header>'
-            '<h1><a href="#exception-attributes">%(exception_type)s: %(exception_description)s</a></h1>'
+            '<h1 title="%(attr_exception_description)s"><a href="#exception-attributes">%(exception_type)s</a></h1>'
             '<p>'
                 '%(exception_message)s\n'
                 '<a target="_blank" href="http://www.google.com/search?sourceid=python-diagnostics&amp;ie=utf-8&amp;oe=utf-8&amp;q=%(search_query)s">search by Google</a>'
@@ -110,7 +110,7 @@ class HtmlFormatter(object):
 
         return _TEMPLATE_SKELETON % {
             "html_user_message": self.escape_html(user_message),
-            "exception_description": self.escape_html(
+            "attr_exception_description": self.escape_attribute(
                 exception_info.exception_description),
             "html_exception_attributes": self._render_exception_attributes(
                 exception_info.exception_attributes),
