@@ -5,10 +5,12 @@ from __future__ import division, print_function, unicode_literals
 
 import sys
 
+from . import logging
+from .formatters import HtmlFormatter
 from .models import ExceptionInfo
 from .storages import FileStorage
-from .formatters import HtmlFormatter
 from ._py3k import to_unicode
+
 
 
 __author__ = "Michal Belica"
@@ -28,6 +30,11 @@ class _ExceptionHook(object):
         self.formatter = formatter
 
         sys.excepthook = self
+
+    def enable_for_logger(self, logger, directory_path=None):
+        handler = logging.FileHandler(directory_path)
+        handler.setFormatter(logging.HtmlFormatter())
+        logger.addHandler(handler)
 
     def __call__(self, type, value, traceback):
         exception_info = ExceptionInfo.from_values(type, value, traceback)
