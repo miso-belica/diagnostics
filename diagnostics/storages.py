@@ -37,12 +37,25 @@ class FileStorage(object):
             raise ValueError("Directory '%s' is not writable" % directory_path)
 
     def _build_path_to_file(self, exception_info):
-        filename = "%s %s.html" % (
-            exception_info.type_name,
-            Environment().timestamp("%Y-%m-%d %H-%M-%S"),
-        )
+        timestamp = Environment().timestamp("%Y-%m-%d %H-%M-%S")
+        exception_type = exception_info.type_name
 
-        return os.path.join(self._directory_path, filename)
+        filename = self._build_filename(exception_type, timestamp)
+        path = os.path.join(self._directory_path, filename)
+
+        order = 1
+        while os.path.exists(path):
+            filename = self._build_filename(exception_type, timestamp, order)
+            path = os.path.join(self._directory_path, filename)
+
+        return path
+
+    def _build_filename(self, exception_type, timestamp, suffix=None):
+        return "%s %s%s.html" % (
+            exception_type,
+            timestamp,
+            ("_" + py3k.to_unicode(suffix)) if suffix else "",
+        )
 
     def _write(self, data, path_to_file):
         with open(path_to_file, "ab") as file:
