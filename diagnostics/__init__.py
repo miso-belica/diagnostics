@@ -49,5 +49,18 @@ class _ExceptionHook(object):
 
         self.storage.save(data, exception_info)
 
+    def __enter__(self):
+        if not self.storage:
+            self.storage = FileStorage()
+        if not self.formatter:
+            self.formatter = HtmlFormatter()
+
+    def __exit__(self, type, value, traceback):
+        if (type, value, traceback) != (None, None, None):
+            self(type, value, traceback)
+
+        # suppress exception
+        return True
+
 
 exception_hook = _ExceptionHook()

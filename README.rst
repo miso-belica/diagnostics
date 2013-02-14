@@ -25,6 +25,14 @@ in diagnostic's exception handler are properly handled and logged
         directory_path = "/path/to/your/log/directory/with/html/tracebacks"
         exception_hook.enable(storage=FileStorage(directory_path))
 
+.. code-block:: python
+
+    from diagnostics import exception_hook
+
+    if __name__ == '__main__':
+        with exception_hook:
+            try_do_risky_job(...)
+
 There is even support for logging in diagnostics. Class
 ``diagnostics.logging.FileHandler`` creates files with detailed traceback
 and log messages are appended to the file *info.log* in directory with
