@@ -7,7 +7,7 @@ import re
 
 from .._py3k import to_unicode, quote_query
 from ..models import ExceptionInfo
-from ..models import Environment
+from ..models import environment
 
 
 _TEMPLATE_SKELETON = (
@@ -87,9 +87,6 @@ class HtmlFormatter(object):
         "'": "&#039;",
     }
 
-    def __init__(self):
-        self.__environment = Environment()
-
     def escape_html(self, value):
         value = to_unicode(value)
         return re.sub(r"[<&>]", self.__get_entity, value)
@@ -114,22 +111,22 @@ class HtmlFormatter(object):
                 exception_info.exception_description),
             "html_exception_attributes": self._render_exception_attributes(
                 exception_info.exception_attributes),
-            "path_to_js": self.__environment.expand_file_resource(
+            "path_to_js": environment.expand_file_resource(
                 "templates/script.js"),
-            "path_to_css": self.__environment.expand_file_resource(
+            "path_to_css": environment.expand_file_resource(
                 "templates/style.css"),
             "exception_type": self.escape_html(exception_info.type_name),
             "exception_message": self.escape_html(exception_info.message),
             "search_query": self._get_search_query(exception_info),
-            "timestamp": self.escape_html(self.__environment.timestamp()),
+            "timestamp": self.escape_html(environment.timestamp()),
             "python_version": self.escape_html(
-                self.__environment.python_version),
+                environment.python_version()),
             "path_to_executable": self.escape_html(
-                self.__environment.path_to_executable),
+                environment.path_to_executable()),
             "working_directory": self.escape_html(
-                self.__environment.working_directory),
+                environment.working_directory()),
             "command_line_arguments": self._render_command_line_arguments(
-                self.__environment.arguments_vector),
+                environment.arguments_vector()),
             "original_traceback": to_unicode(exception_info),
             "frames": self._render_frames(exception_info.frames),
         }

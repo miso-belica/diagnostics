@@ -6,7 +6,7 @@ from __future__ import division, print_function, unicode_literals
 import os
 import sys
 
-from .models import Environment
+from .models import environment
 from . import _py3k as py3k
 
 
@@ -19,8 +19,7 @@ class FileStorage(object):
         self._check_directory_path(self._directory_path)
 
     def _determine_directory_path(self):
-        env = Environment()
-        return env.path_relative_to_main_module("log/")
+        return environment.path_relative_to_main_module("log/")
 
     def save(self, data, exception_info):
         file_path = self._build_path_to_file(exception_info)
@@ -37,7 +36,7 @@ class FileStorage(object):
             raise ValueError("Directory '%s' is not writable" % directory_path)
 
     def _build_path_to_file(self, exception_info):
-        timestamp = Environment().timestamp("%Y-%m-%d %H-%M-%S")
+        timestamp = environment.timestamp("%Y-%m-%d %H-%M-%S")
         exception_type = exception_info.type_name
 
         filename = self._build_filename(exception_type, timestamp)
