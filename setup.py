@@ -31,6 +31,7 @@ setup(
     packages=[
         "diagnostics",
         "diagnostics.models",
+        "diagnostics.logging",
         "diagnostics.formatters",
     ],
     package_data={"diagnostics": [
