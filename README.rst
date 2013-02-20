@@ -78,7 +78,7 @@ From PyPI
 or from git repo
 ::
 
-    pip install git+git@github.com:miso-belica/diagnostics.git
+    pip install git+git://github.com/miso-belica/diagnostics.git
 
 Tests
 -----
