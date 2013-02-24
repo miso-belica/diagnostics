@@ -16,7 +16,7 @@ class HtmlFormatter(LoggingFormatter):
             return formatter.format_exception(exception_info, user_message)
         except:
             return "<p><pre>%s\n%s</pre></p>" % (
-                to_unicode(ExceptionInfo.from_values(exception_info)),
+                to_unicode(ExceptionInfo.from_values(*exception_info)),
                 to_unicode(ExceptionInfo.new()),
             )
 
