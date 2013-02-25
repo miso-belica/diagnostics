@@ -176,10 +176,15 @@ class HtmlFormatter(object):
     def _render_variables(self, variables):
         rendered = []
         for var in variables:
+            try:
+                variable_value = self.escape_html(var.value)
+            except Exception as e:
+                variable_value = "Value of variable is unknown because %r was raised" % e
+
             rendered.append('<dt>%s : %s</dt><dd>%s</dd>' % (
                 self.escape_html(var.name),
                 self.escape_html(var.type_name),
-                self.escape_html(var.value))
+                variable_value)
             )
 
         return "".join(rendered)
