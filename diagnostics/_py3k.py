@@ -43,56 +43,59 @@ def to_string(object):
 
 
 def to_bytes(object):
-    if isinstance(object, bytes):
-        return object
-    elif isinstance(object, unicode):
-        return object.encode("utf8")
-    else:
-        # try encode instance to bytes
-        return instance_to_bytes(object)
+    try:
+        if isinstance(object, bytes):
+            return object
+        elif isinstance(object, unicode):
+            return object.encode("utf8")
+        else:
+            # try encode instance to bytes
+            return instance_to_bytes(object)
+    except UnicodeError:
+        # recover from codec error and use 'repr' function
+        return to_bytes(repr(object))
+
 
 
 def to_unicode(object):
-    if isinstance(object, unicode):
-        return object
-    elif isinstance(object, bytes):
-        return object.decode("utf8")
-    else:
-        # try decode instance to unicode
-        return instance_to_unicode(object)
+    try:
+        if isinstance(object, unicode):
+            return object
+        elif isinstance(object, bytes):
+            return object.decode("utf8")
+        else:
+            # try decode instance to unicode
+            return instance_to_unicode(object)
+    except UnicodeError:
+        # recover from codec error and use 'repr' function
+        return to_unicode(repr(object))
 
 
 def instance_to_bytes(instance):
-    try:
-        if PY3:
-            if hasattr(instance, "__bytes__"):
-                return bytes(instance)
-            elif hasattr(instance, "__str__"):
-                return unicode(instance).encode("utf8")
-        else:
-            if hasattr(instance, "__str__"):
-                return bytes(instance)
-            elif hasattr(instance, "__unicode__"):
-                return unicode(instance).encode("utf8")
-    except UnicodeError:
-        pass # recover from codec error and use '__repr__' method
+    if PY3:
+        if hasattr(instance, "__bytes__"):
+            return bytes(instance)
+        elif hasattr(instance, "__str__"):
+            return unicode(instance).encode("utf8")
+    else:
+        if hasattr(instance, "__str__"):
+            return bytes(instance)
+        elif hasattr(instance, "__unicode__"):
+            return unicode(instance).encode("utf8")
 
     return to_bytes(repr(instance))
 
 
 def instance_to_unicode(instance):
-    try:
-        if PY3:
-            if hasattr(instance, "__str__"):
-                return unicode(instance)
-            elif hasattr(instance, "__bytes__"):
-                return bytes(instance).decode("utf8")
-        else:
-            if hasattr(instance, "__unicode__"):
-                return unicode(instance)
-            elif hasattr(instance, "__str__"):
-                return bytes(instance).decode("utf8")
-    except UnicodeError:
-        pass # recover from codec error and use '__repr__' method
+    if PY3:
+        if hasattr(instance, "__str__"):
+            return unicode(instance)
+        elif hasattr(instance, "__bytes__"):
+            return bytes(instance).decode("utf8")
+    else:
+        if hasattr(instance, "__unicode__"):
+            return unicode(instance)
+        elif hasattr(instance, "__str__"):
+            return bytes(instance).decode("utf8")
 
     return to_unicode(repr(instance))
