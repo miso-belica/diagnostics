@@ -47,6 +47,12 @@ class Frame(object):
             frame_info.lineno, frame_info.index)
 
     def _build_context_lines(self, lines, first_line_number, source_line_index):
+        # code is probably in binary form
+        if lines is None:
+            return (CodeLine(first_line_number,
+                "Code not discovered (probably compiled from C/C++ code)",
+                is_exception_source=True),)
+
         context_lines = []
         for line_index, line in enumerate(lines):
             line_number = first_line_number + line_index
