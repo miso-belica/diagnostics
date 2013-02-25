@@ -51,7 +51,7 @@ class Frame(object):
         if lines is None:
             return (CodeLine(first_line_number,
                 "Code not discovered (probably compiled from C/C++ code)",
-                is_exception_source=True),)
+                exception_source=True),)
 
         context_lines = []
         for line_index, line in enumerate(lines):
