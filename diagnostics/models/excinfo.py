@@ -46,9 +46,7 @@ class ExceptionInfo(tuple):
 
     @property
     def message(self):
-        args = self.exception.args
-        # by convention 1st argument of Exception is message
-        return to_unicode(args[0] if args else self.exception)
+        return to_unicode(self.exception)
 
     @property
     def frames(self):
