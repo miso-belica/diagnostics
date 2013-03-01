@@ -46,6 +46,7 @@ class FileStorage(object):
         while os.path.exists(path):
             filename = self._build_filename(exception_type, timestamp, order)
             path = os.path.join(self._directory_path, filename)
+            order += 1
 
         return path
 
