@@ -26,6 +26,10 @@ class Frame(object):
         return abspath(inspect.getframeinfo(self._frame).filename)
 
     @property
+    def source_line(self):
+        return inspect.getframeinfo(self._frame).lineno
+
+    @property
     def locals(self):
         return self._locals
 

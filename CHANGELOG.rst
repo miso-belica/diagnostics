@@ -2,6 +2,8 @@
 
 Changelog for diagnostics module
 ================================
+- *FEATURE:* The same exceptions are stored only first time
+  (according to their hash).
 - *BUG FIX:* Recover when converting object to unicode raises
   exception (e.g. BeautifulSoup).
 - *BUG FIX:* Format code context even if code is in binary form

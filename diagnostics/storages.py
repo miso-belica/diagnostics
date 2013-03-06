@@ -5,6 +5,7 @@ from __future__ import division, print_function, unicode_literals
 
 import os
 import sys
+import glob
 
 from .models import environment
 from . import _py3k as py3k
@@ -23,7 +24,9 @@ class FileStorage(object):
 
     def save(self, data, exception_info):
         file_path = self._build_path_to_file(exception_info)
-        self._write(data, file_path)
+
+        if not self._file_exists(file_path):
+            self._write(data, file_path)
 
     def _check_directory_path(self, directory_path):
         if not os.path.exists(directory_path):
@@ -36,26 +39,21 @@ class FileStorage(object):
             raise ValueError("Directory '%s' is not writable" % directory_path)
 
     def _build_path_to_file(self, exception_info):
-        timestamp = environment.timestamp("%Y-%m-%d %H-%M-%S")
         exception_type = exception_info.type_name
+        exception_hash = exception_info.hash()
 
-        filename = self._build_filename(exception_type, timestamp)
-        path = os.path.join(self._directory_path, filename)
+        filename = self._build_filename(exception_type, exception_hash)
+        return os.path.join(self._directory_path, filename)
 
-        order = 1
-        while os.path.exists(path):
-            filename = self._build_filename(exception_type, timestamp, order)
-            path = os.path.join(self._directory_path, filename)
-            order += 1
-
-        return path
-
-    def _build_filename(self, exception_type, timestamp, suffix=None):
-        return "%s %s%s.html" % (
+    def _build_filename(self, exception_type, hash):
+        return "%s.%s.html" % (
             exception_type,
-            timestamp,
-            ("_" + py3k.to_unicode(suffix)) if suffix else "",
+            hash,
         )
+
+    def _file_exists(self, path):
+        """Like ``os.path.exists`` but expands wildcards."""
+        return bool(glob.glob(path))
 
     def _write(self, data, path_to_file):
         with open(path_to_file, "ab") as file:

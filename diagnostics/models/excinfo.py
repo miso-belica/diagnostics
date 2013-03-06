@@ -5,9 +5,10 @@ from __future__ import division, print_function, unicode_literals
 
 import sys
 import inspect
+import hashlib
 
 from traceback import format_exception
-from .._py3k import to_unicode, to_string, callable
+from .._py3k import to_unicode, to_string, to_bytes, callable
 from .variable import Variable
 from .frame import Frame
 
@@ -67,6 +68,14 @@ class ExceptionInfo(tuple):
             lambda a: not callable(a))
 
         return Variable.map(attributes)
+
+    def hash(self):
+        """Returns unique identification for exception."""
+        frames = [(f.path_to_file, f.source_line) for f in self.frames]
+        frames.append(self.type)
+
+        data = to_bytes(repr(frames))
+        return hashlib.md5(data).hexdigest()
 
     def __str__(self):
         lines = format_exception(*self)
