@@ -1,6 +1,9 @@
 ===========
 Diagnostics
 ===========
+.. image:: https://api.travis-ci.org/miso-belica/diagnostics.png?branch=master
+   :target: https://travis-ci.org/miso-belica/diagnostics
+
 Module for logging of `detailed traceback
 <http://miso-belica.github.com/diagnostics/log-example.html>`_ as HTML page.
 Unexpected exceptions are catched and logged for further audit. Exceptions
