@@ -10,8 +10,9 @@ except ImportError:
 import diagnostics
 
 
-with open("README.rst") as readme, open("CHANGELOG.rst") as changelog:
-    long_description = readme.read() + "\n\n" + changelog.read()
+with open("README.rst") as readme:
+    with open("CHANGELOG.rst") as changelog:
+        long_description = readme.read() + "\n\n" + changelog.read()
 
 with open("LICENSE.rst") as file:
     license = file.read()
