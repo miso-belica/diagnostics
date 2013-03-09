@@ -28,6 +28,11 @@ setup(
     url="https://github.com/miso-belica/diagnostics",
     license=license,
     keywords=["debug", "cgitb", "traceback"],
+    tests_require=[
+        "nose",
+        "coverage",
+    ],
+    test_suite="tests",
     install_requires=[],
     packages=[
         "diagnostics",

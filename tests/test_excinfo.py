@@ -18,20 +18,20 @@ class TestExceptionInfo(unittest.TestCase):
     def test_compatibility_with_exc_info_result(self):
         info = self._get_exception_info()
 
-        self.assertIsInstance(info, tuple)
+        self.assertTrue(isinstance(info, tuple))
         self.assertEqual(len(info), 3)
 
         exception_type, exception, traceback = info
-        self.assertIsInstance(exception_type, type)
-        self.assertIsInstance(exception, Exception)
+        self.assertTrue(isinstance(exception_type, type))
+        self.assertTrue(isinstance(exception, Exception))
 
     def test_new_interface(self):
         message = "Something went wrong..."
         info = self._get_exception_info(message)
 
         self.assertEqual(info.type_name, "Exception")
-        self.assertIsInstance(info.type, type)
-        self.assertIsInstance(info.exception, Exception)
+        self.assertTrue(isinstance(info.type, type))
+        self.assertTrue(isinstance(info.exception, Exception))
         self.assertEqual(info.message, message)
 
     def test_exception_attributes(self):
@@ -50,8 +50,8 @@ class TestExceptionInfo(unittest.TestCase):
 
         attribute_names = tuple(a.name for a in info.exception_attributes)
         for attr_name in ATTRIBUTES:
-            self.assertIn(attr_name, attribute_names)
+            self.assertTrue(attr_name in attribute_names)
 
         for a in info.exception_attributes:
-            self.assertIn(a.name, ATTRIBUTES)
+            self.assertTrue(a.name in ATTRIBUTES)
             self.assertEqual(ATTRIBUTES[a.name], a.value)
