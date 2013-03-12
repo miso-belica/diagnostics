@@ -14,7 +14,7 @@ class Frame(object):
     def __init__(self, frame, number):
         self._number = number
         self._frame = frame
-        self._function_arguments, self._locals = self._build_locals()
+        self._routine_arguments, self._locals = self._build_locals()
         self._globals = self._build_globals()
 
     @property
@@ -44,7 +44,7 @@ class Frame(object):
 
     @property
     def routine_arguments(self):
-        return self._function_arguments
+        return self._routine_arguments
 
     def lines(self, count=1):
         frame_info = inspect.getframeinfo(self._frame, count)
