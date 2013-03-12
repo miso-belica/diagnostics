@@ -23,11 +23,11 @@ class Frame(object):
 
     @property
     def path_to_file(self):
-        return abspath(inspect.getframeinfo(self._frame).filename)
+        return abspath(self._frame.f_code.co_filename)
 
     @property
     def source_line(self):
-        return inspect.getframeinfo(self._frame).lineno
+        return self._frame.f_lineno
 
     @property
     def locals(self):
@@ -39,7 +39,8 @@ class Frame(object):
 
     @property
     def routine_name(self):
-        return inspect.getframeinfo(self._frame).function
+        """Returns name of scope in which was exception raised."""
+        return self._frame.f_code.co_name
 
     @property
     def routine_arguments(self):
