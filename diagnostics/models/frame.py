@@ -71,16 +71,45 @@ class Frame(object):
     def _build_locals(self):
         params, args, kwargs, local_vars = inspect.getargvalues(self._frame)
 
+        routine_arguments = self._build_routine_arguments(params, args, kwargs,
+            local_vars)
+
+        param_names = params + [args, kwargs]
+        local_variables = self._build_local_variables(
+            sorted(local_vars.items()), param_names)
+
+        return routine_arguments, local_variables
+
+    def _build_routine_arguments(self, params, args, kwargs, local_vars):
+        routine_arguments = []
+
+        for name in params:
+            variable = Variable(name, local_vars[name])
+            routine_arguments.append(variable)
+
+        if args is not None:
+            variable = Variable("*" + args, local_vars[args])
+            routine_arguments.append(variable)
+
+        if kwargs is not None:
+            variable = Variable("**" + kwargs, local_vars[kwargs])
+            routine_arguments.append(variable)
+
+        return routine_arguments
+
+    def _build_local_variables(self, local_vars, routine_argument_names):
         local_variables = []
-        function_arguments = []
-        for var_name, var_value in sorted(local_vars.items()):
+
+        for var_name, var_value in local_vars:
+            # skip routine arguments
+            if var_name in routine_argument_names:
+                continue
+
             variable = Variable(var_name, var_value)
-            if var_name in params or var_name in (args, kwargs):
-                function_arguments.append(variable)
-            elif not variable.is_magic():
+            if not variable.is_magic():
                 local_variables.append(variable)
 
-        return tuple(function_arguments), tuple(local_variables)
+        return local_variables
 
     def _build_globals(self):
         return Variable.map(self._frame.f_globals.items())

@@ -2,6 +2,8 @@
 
 Changelog for diagnostics module
 ================================
+- *BUG FIX:* Function/method variables are ordered according
+  to function/method signature.
 - *FEATURE:* The same exceptions are stored only first time
   (according to their hash).
 - *BUG FIX:* Recover when converting object to unicode raises
