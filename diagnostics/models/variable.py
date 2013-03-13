@@ -3,6 +3,8 @@
 from __future__ import absolute_import
 from __future__ import division, print_function, unicode_literals
 
+import inspect
+
 from .._py3k import to_unicode, to_string
 
 
@@ -39,6 +41,15 @@ class Variable(object):
 
     def is_magic(self):
         return self._name.startswith("__") and self._name.endswith("__")
+
+    def is_type(self):
+        return isinstance(self._value, type)
+
+    def is_module(self):
+        return inspect.ismodule(self._value)
+
+    def is_function(self):
+        return inspect.isfunction(self._value)
 
     def __repr__(self):
         return to_string("<Variable %s = %s>") % (
