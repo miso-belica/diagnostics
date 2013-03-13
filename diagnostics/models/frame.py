@@ -8,6 +8,7 @@ import inspect
 from os.path import abspath
 from .variable import Variable
 from .code import CodeLine
+from .._py3k import to_string, to_unicode
 
 
 class Frame(object):
@@ -23,7 +24,7 @@ class Frame(object):
 
     @property
     def path_to_file(self):
-        return abspath(self._frame.f_code.co_filename)
+        return to_unicode(abspath(self._frame.f_code.co_filename))
 
     @property
     def source_line(self):
@@ -40,7 +41,7 @@ class Frame(object):
     @property
     def routine_name(self):
         """Returns name of scope in which was exception raised."""
-        return self._frame.f_code.co_name
+        return to_unicode(self._frame.f_code.co_name)
 
     @property
     def routine_arguments(self):
@@ -83,3 +84,11 @@ class Frame(object):
 
     def _build_globals(self):
         return Variable.map(self._frame.f_globals.items())
+
+    def __repr__(self):
+        return to_string("<Frame#%d: %s>") % (
+            self.number,
+            to_string(self.routine_name),
+        )
+
+    __str__ = __repr__
