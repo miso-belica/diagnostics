@@ -112,7 +112,14 @@ class Frame(object):
         return local_variables
 
     def _build_globals(self):
-        return Variable.map(self._frame.f_globals.items())
+        """Returns global variables except classes, builtin types, ..."""
+        def is_usefull_variable(var):
+            return not (var.is_type() or var.is_module() or var.is_function())
+
+        variables = Variable.map(self._frame.f_globals.items())
+        variables = filter(is_usefull_variable, variables)
+
+        return tuple(sorted(variables, key=lambda v: v.name.lower()))
 
     def __repr__(self):
         return to_string("<Frame#%d: %s>") % (

@@ -2,6 +2,8 @@
 
 Changelog for diagnostics module
 ================================
+- *BUG FIX:* Removed class types, modules and other crap from
+  list of global variables.
 - *BUG FIX:* Function/method variables are ordered according
   to function/method signature.
 - *FEATURE:* The same exceptions are stored only first time
