@@ -5,8 +5,8 @@ from __future__ import division, print_function, unicode_literals
 
 import os
 import exc_utils
+import unittest
 
-from case import unittest
 from glob import glob
 from os.path import abspath, join, dirname, exists as file_exists
 from diagnostics import _py3k as py3k

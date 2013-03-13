@@ -3,7 +3,8 @@
 from __future__ import absolute_import
 from __future__ import division, print_function, unicode_literals
 
-from case import unittest
+import unittest
+
 from nose import SkipTest
 from diagnostics import _py3k as py3k
 
