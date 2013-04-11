@@ -8,7 +8,7 @@ import inspect
 import hashlib
 
 from traceback import format_exception
-from .._py3k import to_unicode, to_string, to_bytes, callable
+from .._py3k import to_unicode, to_string, to_bytes
 from .variable import Variable
 from .frame import Frame
 
