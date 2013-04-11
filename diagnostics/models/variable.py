@@ -5,7 +5,7 @@ from __future__ import division, print_function, unicode_literals
 
 import inspect
 
-from .._py3k import to_unicode, to_string
+from .._py3k import to_unicode, to_string, class_types
 
 
 class Variable(object):
@@ -43,7 +43,7 @@ class Variable(object):
         return self._name.startswith("__") and self._name.endswith("__")
 
     def is_type(self):
-        return isinstance(self._value, type)
+        return isinstance(self._value, class_types)
 
     def is_module(self):
         return inspect.ismodule(self._value)

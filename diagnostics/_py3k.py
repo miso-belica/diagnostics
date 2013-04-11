@@ -19,6 +19,13 @@ string_types = (bytes, unicode,)
 
 
 try:
+    from types import ClassType
+    class_types = (ClassType, type)
+except ImportError:
+    class_types = type
+
+
+try:
     from urllib.parse import quote as quote_query
 except ImportError:
     from urllib import quote as quote_query
