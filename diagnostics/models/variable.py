@@ -8,7 +8,18 @@ import inspect
 from .._py3k import to_unicode, to_string, class_types
 
 
+class _UndefinedValue(object):
+    """This is value for undefined variable."""
+
+    def __repr__(self):
+        return to_string("<Undefined value: probably deleted>")
+
+    __str__ = __repr__
+
+
 class Variable(object):
+    UNDEFINED_VALUE = _UndefinedValue()
+
     def __init__(self, name, value):
         self._name = to_unicode(name)
         self._value = value

@@ -9,6 +9,7 @@ import unittest
 from exc_utils import (get_exception_info_1, get_exception_info_with_2_frames,
     get_exception_info_with_locals)
 from diagnostics._py3k import unicode
+from diagnostics.models import ExceptionInfo, Variable
 
 
 class TestFrame(unittest.TestCase):
@@ -67,3 +68,23 @@ class TestFrame(unittest.TestCase):
         self.assertEqual(frame.globals[3].name, "EXCEPTION_FILE_NAME_2")
         self.assertEqual(frame.globals[4].name, "print_function")
         self.assertEqual(frame.globals[5].name, "unicode_literals")
+
+    def test_deleted_arguments(self):
+        def get_exception_info(name, value, deleted_in_body):
+            try:
+                del deleted_in_body
+                raise Exception("Useless message.")
+            except:
+                return ExceptionInfo.new()
+
+        info = get_exception_info("vname", "vvalue", "special value")
+        frame = info.frames[0]
+
+        self.assertEqual(frame.routine_arguments[0].name, "name")
+        self.assertEqual(frame.routine_arguments[0].value, "vname")
+
+        self.assertEqual(frame.routine_arguments[1].name, "value")
+        self.assertEqual(frame.routine_arguments[1].value, "vvalue")
+
+        self.assertEqual(frame.routine_arguments[2].name, "deleted_in_body")
+        self.assertEqual(frame.routine_arguments[2].value, Variable.UNDEFINED_VALUE)

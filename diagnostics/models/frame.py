@@ -84,15 +84,18 @@ class Frame(object):
         routine_arguments = []
 
         for name in params:
-            variable = Variable(name, local_vars[name])
+            value = local_vars.get(name, Variable.UNDEFINED_VALUE)
+            variable = Variable(name, value)
             routine_arguments.append(variable)
 
         if args is not None:
-            variable = Variable("*" + args, local_vars[args])
+            value = local_vars.get(args, Variable.UNDEFINED_VALUE)
+            variable = Variable("*" + args, value)
             routine_arguments.append(variable)
 
         if kwargs is not None:
-            variable = Variable("**" + kwargs, local_vars[kwargs])
+            value = local_vars.get(kwargs, Variable.UNDEFINED_VALUE)
+            variable = Variable("**" + kwargs, value)
             routine_arguments.append(variable)
 
         return routine_arguments
