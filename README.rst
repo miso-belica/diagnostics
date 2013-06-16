@@ -62,14 +62,14 @@ logged tracebacks.
     from diagnostics import exception_hook
 
     if __name__ == '__main__':
-        logger = logging.getLogger("logger")
         directory_path = "/path/to/your/log/directory/with/html/tracebacks"
-        exception_hook.enable_for_logger(logger, directory_path)
+        exception_hook.enable_for_logger("example_logger", directory_path)
 
         try:
             try_do_risky_job(...)
         except:
-            logging.error("Error occured", exc_info=True)
+            logger = logging.getLogger("example_logger")
+            logger.error("Error occured", exc_info=True)
 
 Installation
 ------------

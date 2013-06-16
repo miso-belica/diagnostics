@@ -4,12 +4,13 @@ from __future__ import absolute_import
 from __future__ import division, print_function, unicode_literals
 
 import sys
+import logging as pylogging
 
 from . import logging
 from .formatters import HtmlFormatter
 from .models import ExceptionInfo
 from .storages import FileStorage
-from ._py3k import to_unicode
+from ._py3k import string_types, to_unicode
 
 
 
@@ -32,6 +33,9 @@ class _ExceptionHook(object):
         sys.excepthook = self
 
     def enable_for_logger(self, logger, directory_path=None):
+        if isinstance(logger, string_types):
+            logger = pylogging.getLogger(logger)
+
         handler = logging.FileHandler(directory_path)
         handler.setFormatter(logging.HtmlFormatter())
         logger.addHandler(handler)
