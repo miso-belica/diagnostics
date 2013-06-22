@@ -46,9 +46,12 @@ logged tracebacks.
     import logging
 
     from diagnostics import exception_hook
+    from diagnostics.logging import FileHandler
 
     if __name__ == '__main__':
-        exception_hook.enable_for_logger(logging.getLogger())
+        directory_path = "/path/to/log/directory/with/html/tracebacks/info.log"
+        log_handler = FileHandler(file_path)
+        exception_hook.enable_for_logger(logging.getLogger(), handler=log_handler)
 
         try:
             try_do_risky_job(...)
@@ -60,10 +63,12 @@ logged tracebacks.
     import logging
 
     from diagnostics import exception_hook
+    from diagnostics.logging import FileHandler
 
     if __name__ == '__main__':
-        directory_path = "/path/to/your/log/directory/with/html/tracebacks"
-        exception_hook.enable_for_logger("example_logger", directory_path)
+        directory_path = "/path/to/log/directory/with/html/tracebacks/info.log"
+        log_handler = FileHandler(file_path)
+        exception_hook.enable_for_logger("example_logger", handler=log_handler)
 
         try:
             try_do_risky_job(...)

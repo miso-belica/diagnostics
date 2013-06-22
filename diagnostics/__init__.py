@@ -32,11 +32,10 @@ class _ExceptionHook(object):
 
         sys.excepthook = self
 
-    def enable_for_logger(self, logger, directory_path=None):
+    def enable_for_logger(self, logger, handler):
         if isinstance(logger, string_types):
             logger = pylogging.getLogger(logger)
 
-        handler = logging.FileHandler(directory_path)
         handler.setFormatter(logging.HtmlFormatter())
         logger.addHandler(handler)
 

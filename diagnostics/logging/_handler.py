@@ -3,17 +3,19 @@
 from __future__ import absolute_import
 from __future__ import division, print_function, unicode_literals
 
-from logging import FileHandler as LoggingHandler
-from os.path import join
+from os.path import dirname
+from logging import FileHandler as LoggingFileHandler
 from ..storages import FileStorage
 from ..models import ExceptionInfo
 
 
-class FileHandler(LoggingHandler):
-    def __init__(self, directory_path=None):
+class FileHandler(LoggingFileHandler):
+    def __init__(self, file_path, mode="a", encoding="utf8", delay=True):
+        directory_path = dirname(file_path)
         self._storage = FileStorage(directory_path)
-        path = join(self._storage._directory_path, "info.log")
-        super(FileHandler, self).__init__(path, encoding="utf8", delay=True)
+        # super() raises exception in Python 2.6
+        # TypeError: super() argument 1 must be type, not classobj
+        LoggingFileHandler.__init__(self, file_path, mode, encoding, delay)
 
     def emit(self, record):
         exception_info = record.exc_info
@@ -24,7 +26,9 @@ class FileHandler(LoggingHandler):
         elif exception_info:
             exception_info = ExceptionInfo.new()
 
-        super(FileHandler, self).emit(record)
+        # super() raises exception in Python 2.6
+        # TypeError: super() argument 1 must be type, not classobj
+        LoggingFileHandler.emit(self, record)
 
         if exception_info:
             data = self.formatter.format_exception(exception_info,
