@@ -5,7 +5,7 @@ from __future__ import division, print_function, unicode_literals
 
 import re
 
-from .._py3k import to_unicode, quote_query
+from .._py3k import to_unicode, to_string, quote_query
 from ..models import ExceptionInfo
 from ..models import environment
 
@@ -137,7 +137,9 @@ class HtmlFormatter(object):
             message = message.replace(s, " ")
 
         query = '"python" %s %s' % (info.type_name, message,)
-        return self.escape_attribute(quote_query(query, ""))
+        # Python 2.6 needs native strings as parameters
+        query = quote_query(to_string(query), to_string(""))
+        return self.escape_attribute(to_unicode(query))
 
     def _render_exception_attributes(self, attributes):
         return "".join('<dt>%s : %s</dt><dd>%s</dd>' % (
