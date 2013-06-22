@@ -43,11 +43,11 @@ def working_directory():
 
 
 def arguments_vector():
-    return tuple(map(to_unicode, sys.argv))
+    return list(map(to_unicode, sys.argv))
 
 
 def command_line_arguments():
-    return self.arguments_vector[1:]
+    return arguments_vector()[1:]
 
 
 def program_name():
