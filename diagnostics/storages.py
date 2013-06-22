@@ -4,7 +4,6 @@ from __future__ import absolute_import
 from __future__ import division, print_function, unicode_literals
 
 import os
-import glob
 
 from .models import environment
 from . import _py3k as py3k
@@ -23,9 +22,7 @@ class FileStorage(object):
 
     def save(self, data, exception_info):
         file_path = self._build_path_to_file(exception_info)
-
-        if not self._file_exists(file_path):
-            self._write(data, file_path)
+        self._write(data, file_path)
 
     def _check_directory_path(self, directory_path):
         if not os.path.exists(directory_path):
@@ -50,10 +47,6 @@ class FileStorage(object):
             hash,
         )
 
-    def _file_exists(self, path):
-        """Like ``os.path.exists`` but expands wildcards."""
-        return bool(glob.glob(path))
-
     def _write(self, data, path_to_file):
-        with open(path_to_file, "ab") as file:
+        with open(path_to_file, "wb") as file:
             file.write(py3k.to_bytes(data))

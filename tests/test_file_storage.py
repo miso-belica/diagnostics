@@ -45,7 +45,8 @@ class TestFileStorage(unittest.TestCase):
         path = join(LOG_DIRECTORY, exc_utils.EXCEPTION_FILE_NAME_1)
         self.assertTrue(file_exists(path))
 
-    def test_dont_save_duplicate(self):
+    def test_override_duplicate_traceback(self):
+        """Only the freshest traceback is stored."""
         path = join(LOG_DIRECTORY, exc_utils.EXCEPTION_FILE_NAME_1)
         exception_info = exc_utils.get_exception_info_1()
 
@@ -58,7 +59,7 @@ class TestFileStorage(unittest.TestCase):
         storage = FileStorage(LOG_DIRECTORY)
         storage.save("duplicate:second", exception_info)
 
-        self.assertEqual("duplicate:first", self._get_file_contents(path))
+        self.assertEqual("duplicate:second", self._get_file_contents(path))
 
     def test_save_different_tracebacks(self):
         path_1 = join(LOG_DIRECTORY, exc_utils.EXCEPTION_FILE_NAME_1)
