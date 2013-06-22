@@ -9,7 +9,6 @@ import unittest
 
 from glob import glob
 from os.path import abspath, join, dirname, exists as file_exists
-from diagnostics import _py3k as py3k
 from diagnostics.storages import FileStorage
 
 
