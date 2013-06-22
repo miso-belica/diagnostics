@@ -2,11 +2,14 @@
 
 Changelog for diagnostics module
 ================================
+
+0.2.0 (2013-06-22)
+------------------
 - *BUG FIX:* Removed class types, modules and other crap from
   list of global variables.
 - *BUG FIX:* Function/method variables are ordered according
   to function/method signature.
-- *FEATURE:* The same exceptions are stored only first time
+- *FEATURE:* The same exceptions are stored only once
   (according to their hash).
 - *BUG FIX:* Recover when converting object to unicode raises
   exception (e.g. BeautifulSoup).
