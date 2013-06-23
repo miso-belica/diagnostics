@@ -49,7 +49,7 @@ logged tracebacks.
     from diagnostics.logging import FileHandler
 
     if __name__ == '__main__':
-        directory_path = "/path/to/log/directory/with/html/tracebacks/info.log"
+        file_path = "/path/to/log/directory/with/html/tracebacks/info.log"
         log_handler = FileHandler(file_path)
         exception_hook.enable_for_logger(logging.getLogger(), handler=log_handler)
 
@@ -66,7 +66,7 @@ logged tracebacks.
     from diagnostics.logging import FileHandler
 
     if __name__ == '__main__':
-        directory_path = "/path/to/log/directory/with/html/tracebacks/info.log"
+        file_path = "/path/to/log/directory/with/html/tracebacks/info.log"
         log_handler = FileHandler(file_path)
         exception_hook.enable_for_logger("example_logger", handler=log_handler)
 
