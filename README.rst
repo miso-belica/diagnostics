@@ -94,5 +94,4 @@ Run tests via
 
 .. code-block:: bash
 
-    $ nosetests --with-coverage --cover-package=diagnostics --cover-erase tests
-    $ nosetests-3.3 --with-coverage --cover-package=diagnostics --cover-erase tests
+    $ nosetests-2.6 && nosetests-3.2 && nosetests-2.7 && nosetests-3.3
