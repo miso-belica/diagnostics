@@ -27,4 +27,4 @@ class CodeLine(object):
         return to_string(self.__line)
 
     def __repr__(self):
-        return "<CodeLine#%d [%s]>" % (self.__number, self.__line.encode("utf8"))
+        return to_string("<CodeLine#%d: %s>") % (self.__number, self.__line.encode("utf8"))
