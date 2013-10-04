@@ -15,8 +15,8 @@ class Frame(object):
     def __init__(self, frame, number):
         self._number = number
         self._frame = frame
-        self._routine_arguments, self._locals = self._build_locals()
         self._globals = self._build_globals()
+        self._routine_arguments, self._locals = self._build_locals([v.name for v in self.globals])
 
     @property
     def number(self):
@@ -68,13 +68,14 @@ class Frame(object):
 
         return tuple(context_lines)
 
-    def _build_locals(self):
+    def _build_locals(self, globals_names):
         params, args, kwargs, local_vars = inspect.getargvalues(self._frame)
 
         routine_arguments = self._build_routine_arguments(params, args, kwargs, local_vars)
 
         param_names = params + [args, kwargs]
-        local_variables = self._build_local_variables(local_vars.items(), param_names)
+        local_variables = self._build_local_variables(local_vars.items(),
+            globals_names, param_names)
 
         return routine_arguments, local_variables
 
@@ -98,12 +99,12 @@ class Frame(object):
 
         return routine_arguments
 
-    def _build_local_variables(self, local_vars, routine_argument_names):
+    def _build_local_variables(self, local_vars, globals_names, routine_argument_names):
         local_variables = []
 
         for var_name, var_value in local_vars:
             # skip routine arguments
-            if var_name in routine_argument_names:
+            if var_name in routine_argument_names or var_name in globals_names:
                 continue
 
             variable = Variable(var_name, var_value)
