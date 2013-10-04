@@ -71,8 +71,7 @@ class Frame(object):
     def _build_locals(self):
         params, args, kwargs, local_vars = inspect.getargvalues(self._frame)
 
-        routine_arguments = self._build_routine_arguments(params, args, kwargs,
-            local_vars)
+        routine_arguments = self._build_routine_arguments(params, args, kwargs, local_vars)
 
         param_names = params + [args, kwargs]
         local_variables = self._build_local_variables(local_vars.items(), param_names)
