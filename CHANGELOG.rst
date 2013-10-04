@@ -4,6 +4,7 @@ Changelog for diagnostics module
 ================================
 
 0.2.1 (2013-10-04)
+------------------
 - *FEATURE:* Removed empty trailing lines from context code.
 - *BUG FIX:* Removed duplicated global variables from list of local variables.
 - *BUG FIX:* Don't show types/modules/functions in list of local variables.
