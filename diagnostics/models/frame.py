@@ -6,8 +6,9 @@ from __future__ import division, print_function, unicode_literals
 import inspect
 
 from os.path import abspath
-from .variable import Variable
 from .code import CodeLine
+from .variable import Variable
+from ..utils import strip
 from .._py3k import to_string, to_unicode
 
 
@@ -49,24 +50,26 @@ class Frame(object):
 
     def lines(self, count=1):
         frame_info = inspect.getframeinfo(self._frame, count)
-        return self._build_context_lines(frame_info.code_context,
+        lines = self._build_context_lines(frame_info.code_context,
             frame_info.lineno, frame_info.index)
 
-    def _build_context_lines(self, lines, first_line_number, source_line_index):
+        return lines, frame_info.lineno
+
+    def _build_context_lines(self, lines, source_line_number, source_line_index):
         # code is probably in binary form
         if lines is None:
-            return (CodeLine(first_line_number,
+            return (CodeLine(source_line_number,
                 "Code not discovered (probably compiled from C/C++ code)",
                 exception_source=True),)
 
         context_lines = []
         for line_index, line in enumerate(lines):
-            line_number = first_line_number + line_index
+            line_number = source_line_number + (line_index - source_line_index)
             is_exception_source = bool(line_index == source_line_index)
 
             context_lines.append(CodeLine(line_number, line, is_exception_source))
 
-        return tuple(context_lines)
+        return strip(context_lines, lambda l: to_unicode(l) == "")
 
     def _build_locals(self, globals_names):
         params, args, kwargs, local_vars = inspect.getargvalues(self._frame)
