@@ -7,7 +7,6 @@ import unittest
 
 from exc_utils import get_exception_info_1
 from diagnostics import _py3k as py3k
-from diagnostics.models import ExceptionInfo
 
 
 class TestExceptionInfo(unittest.TestCase):
