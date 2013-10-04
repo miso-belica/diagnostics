@@ -20,6 +20,12 @@ def path_relative_to_main_module(path):
     return to_unicode(join(directory, path))
 
 
+def read_resource_data(path):
+    path = expand_file_resource(path)
+    with open(path) as file:
+        return file.read().decode("utf8")
+
+
 def expand_file_resource(path):
     directory = dirname(sys.modules["diagnostics"].__file__)
     directory = abspath(directory)

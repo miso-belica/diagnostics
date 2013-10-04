@@ -18,7 +18,7 @@ _TEMPLATE_SKELETON = (
         '<meta name="robots" content="noindex,noarchive"/>'
         '<meta name="generator" content="Python diagnostics module"/>'
         '<title>%(html_user_message)s</title>'
-        '<link rel="stylesheet" href="file:///%(path_to_css)s" media="screen,projection"/>'
+        '<style rel="stylesheet" media="screen,projection">%(css_data)s</style>'
     '</head>'
     '<body>'
         '<header>'
@@ -46,7 +46,7 @@ _TEMPLATE_SKELETON = (
             '</dl>'
         '</div>'
 
-        '<script src="file:///%(path_to_js)s"></script>'
+        '<script>%(js_data)s</script>'
         '<!-- <![CDATA[\n'
         '%(original_traceback)s'
         ']]> -->'
@@ -111,9 +111,9 @@ class HtmlFormatter(object):
                 exception_info.exception_description),
             "html_exception_attributes": self._render_exception_attributes(
                 exception_info.exception_attributes),
-            "path_to_js": environment.expand_file_resource(
+            "js_data": environment.read_resource_data(
                 "templates/script.js"),
-            "path_to_css": environment.expand_file_resource(
+            "css_data": environment.read_resource_data(
                 "templates/style.css"),
             "exception_type": self.escape_html(exception_info.type_name),
             "exception_message": self.escape_html(exception_info.message),
