@@ -75,8 +75,7 @@ class Frame(object):
             local_vars)
 
         param_names = params + [args, kwargs]
-        local_variables = self._build_local_variables(
-            sorted(local_vars.items()), param_names)
+        local_variables = self._build_local_variables(local_vars.items(), param_names)
 
         return routine_arguments, local_variables
 
@@ -112,7 +111,7 @@ class Frame(object):
             if not variable.is_magic():
                 local_variables.append(variable)
 
-        return local_variables
+        return sorted(local_variables, key=lambda v: v.name.lower())
 
     def _build_globals(self):
         """Returns global variables except classes, builtin types, ..."""
