@@ -186,8 +186,9 @@ class HtmlFormatter(object):
             rendered.append('<dt>%s : %s</dt><dd>%s</dd>' % (
                 self.escape_html(var.name),
                 self.escape_html(var.type_name),
-                variable_value)
-            )
+                # replace empty value by non-breaking space
+                "&nbsp;" if variable_value == '' else variable_value
+            ))
 
         return "".join(rendered)
 
