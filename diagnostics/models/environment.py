@@ -22,7 +22,7 @@ def path_relative_to_main_module(path):
 
 def read_resource_data(path):
     path = expand_file_resource(path)
-    with open(path) as file:
+    with open(path, "rb") as file:
         return file.read().decode("utf8")
 
 
