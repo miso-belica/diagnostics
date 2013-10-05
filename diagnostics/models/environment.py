@@ -6,7 +6,7 @@ from __future__ import division, print_function, unicode_literals
 import sys
 import datetime
 
-from os.path import dirname, abspath, join
+from os.path import dirname, abspath, join, exists
 from .._py3k import to_unicode, get_working_directory
 
 
@@ -26,6 +26,9 @@ def path_relative_to_main_module(path):
 
 def read_resource_data(path):
     path = expand_file_resource(path)
+    if not exists(path):
+        raise ValueError("Resource for given path doesn't exist: " + path)
+
     with open(path, "rb") as file:
         return file.read().decode("utf8")
 
