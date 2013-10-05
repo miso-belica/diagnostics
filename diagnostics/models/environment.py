@@ -15,7 +15,11 @@ def timestamp(format="%Y-%m-%d %H:%M:%S"):
 
 
 def path_relative_to_main_module(path):
-    directory = dirname(main_module().__file__)
+    try:
+        directory = dirname(sys.modules["__main__"].__file__)
+    except AttributeError: # executed from terminal
+        directory = get_working_directory()
+
     directory = abspath(directory)
     return to_unicode(join(directory, path))
 
@@ -30,10 +34,6 @@ def expand_file_resource(path):
     directory = dirname(sys.modules["diagnostics"].__file__)
     directory = abspath(directory)
     return join(directory, path)
-
-
-def main_module():
-    return sys.modules["__main__"]
 
 
 def python_version():
