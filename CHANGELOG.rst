@@ -3,6 +3,9 @@
 Changelog for diagnostics module
 ================================
 
+0.2.3 (unpublished)
+- *BUG FIX:* Added time and logging level name into log messages.
+
 0.2.2 (2013-10-05)
 ------------------
 - *BUG FIX:* Fixed usage in terminal.

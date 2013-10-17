@@ -35,7 +35,8 @@ class _ExceptionHook(object):
         if isinstance(logger, string_types):
             logger = pylogging.getLogger(logger)
 
-        handler.setFormatter(logging.HtmlFormatter())
+        formatter = logging.HtmlFormatter("%(asctime)s [%(levelname)s]: %(message)s")
+        handler.setFormatter(formatter)
         logger.addHandler(handler)
 
     def __call__(self, type, value, traceback):
