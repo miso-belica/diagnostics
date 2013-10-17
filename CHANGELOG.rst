@@ -3,6 +3,12 @@
 Changelog for diagnostics module
 ================================
 
+0.2.2 (2013-10-05)
+------------------
+- *BUG FIX:* Fixed usage in terminal.
+- *BUG FIX:* Fixed reading of JS/CSS file in Python 3. HTML traceback
+  is properly rendered.
+
 0.2.1 (2013-10-04)
 ------------------
 - *FEATURE:* Removed empty trailing lines from context code.
