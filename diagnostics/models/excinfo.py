@@ -80,3 +80,5 @@ class ExceptionInfo(tuple):
     def __str__(self):
         lines = format_exception(*self)
         return to_string("").join(to_string(l) for l in lines)
+
+    __repr__ = __str__
