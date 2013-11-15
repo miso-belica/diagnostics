@@ -56,7 +56,7 @@ class ExceptionInfo(tuple):
         frame_order = 1
         traceback = self.traceback
         while traceback:
-            frames.append(Frame(traceback.tb_frame, frame_order))
+            frames.append(Frame(traceback, frame_order))
             traceback = traceback.tb_next
             frame_order += 1
 

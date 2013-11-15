@@ -14,7 +14,7 @@ from ._py3k import string_types, to_unicode
 
 
 __author__ = "Michal Belica"
-__version__ = "0.2.2"
+__version__ = "0.2.3"
 
 
 class _ExceptionHook(object):

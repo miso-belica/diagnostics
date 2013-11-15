@@ -3,7 +3,9 @@
 Changelog for diagnostics module
 ================================
 
-0.2.3 (unpublished)
+0.2.3 (2013-11-15)
+- *BUG FIX:* Context code is rendered with correct line number even
+  when exception is raised from with-statement block.
 - *BUG FIX:* Added time and logging level name into log messages.
 
 0.2.2 (2013-10-05)

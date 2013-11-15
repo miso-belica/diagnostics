@@ -13,9 +13,10 @@ from .._py3k import to_string, to_unicode
 
 
 class Frame(object):
-    def __init__(self, frame, number):
+    def __init__(self, traceback, number):
         self._number = number
-        self._frame = frame
+        self._traceback = traceback
+        self._frame = traceback.tb_frame
         self._globals = self._build_globals()
         self._routine_arguments, self._locals = self._build_locals([v.name for v in self.globals])
 
@@ -29,7 +30,11 @@ class Frame(object):
 
     @property
     def source_line(self):
-        return self._frame.f_lineno
+        """
+        Line number in frame is wrong when exception is raised in context manager.
+        But line number in traceback object is correctly set.
+        """
+        return self._traceback.tb_lineno
 
     @property
     def locals(self):
@@ -49,7 +54,7 @@ class Frame(object):
         return self._routine_arguments
 
     def lines(self, count=1):
-        frame_info = inspect.getframeinfo(self._frame, count)
+        frame_info = inspect.getframeinfo(self._traceback, count)
         return self._build_context_lines(frame_info.code_context,
             frame_info.lineno, frame_info.index)
 
