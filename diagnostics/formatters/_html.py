@@ -157,18 +157,17 @@ class HtmlFormatter(object):
         return "".join(rendered)
 
     def _render_frame(self, frame):
-        context_lines, source_line_number = frame.lines(10)
         return _FRAME_SKELETON % {
             "frame_number": self.escape_html(frame.number),
             "attr_editor_command": self.escape_attribute(frame.path_to_file),
             "full_file_path": self.escape_html(frame.path_to_file),
             "attr_full_file_path": self.escape_attribute(frame.path_to_file),
             "html_full_routine_name_with_module_prefix": self.escape_html(frame.routine_name),
-            "attr_start_line_number": self.escape_attribute(source_line_number),
+            "attr_start_line_number": self.escape_attribute(frame.source_line),
             "html_function_arguments": self._render_variables(frame.routine_arguments),
             "html_locals": self._render_variables(frame.locals),
             "html_globals": self._render_variables(frame.globals),
-            "html_context_lines": self._render_context_lines(context_lines, frame.number),
+            "html_context_lines": self._render_context_lines(frame.lines(10), frame.number),
         }
 
     def _render_variables(self, variables):

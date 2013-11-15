@@ -50,10 +50,8 @@ class Frame(object):
 
     def lines(self, count=1):
         frame_info = inspect.getframeinfo(self._frame, count)
-        lines = self._build_context_lines(frame_info.code_context,
+        return self._build_context_lines(frame_info.code_context,
             frame_info.lineno, frame_info.index)
-
-        return lines, frame_info.lineno
 
     def _build_context_lines(self, lines, source_line_number, source_line_index):
         # code is probably in binary form
