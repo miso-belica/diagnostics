@@ -2,6 +2,9 @@
 
 Changelog for diagnostics module
 ================================
+0.2.4 (2014-04-14)
+------------------
+- *BUG FIX:* Correctly logged traceback if no exception occured.
 
 0.2.3 (2013-11-15)
 ------------------

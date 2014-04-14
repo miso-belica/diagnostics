@@ -27,7 +27,10 @@ class ExceptionInfo(tuple):
 
     @property
     def type_name(self):
-        return to_unicode(self.type.__name__)
+        if self.type is None:
+            return None
+        else:
+            return to_unicode(self.type.__name__)
 
     @property
     def type(self):
@@ -39,7 +42,10 @@ class ExceptionInfo(tuple):
 
     @property
     def exception_description(self):
-        return to_unicode(self.exception.__doc__)
+        if self.exception is None:
+            return ""
+        else:
+            return to_unicode(self.exception.__doc__)
 
     @property
     def traceback(self):

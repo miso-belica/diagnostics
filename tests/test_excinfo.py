@@ -7,6 +7,7 @@ import unittest
 
 from exc_utils import get_exception_info_1
 from diagnostics import _py3k as py3k
+from diagnostics.models.excinfo import ExceptionInfo
 
 
 class TestExceptionInfo(unittest.TestCase):
@@ -50,3 +51,18 @@ class TestExceptionInfo(unittest.TestCase):
         for a in info.exception_attributes:
             self.assertTrue(a.name in ATTRIBUTES)
             self.assertEqual(ATTRIBUTES[a.name], a.value)
+
+    def test_info_wtihout_exception_raised(self):
+        """
+        This happes when somebody logs traceback but no exception
+        was raised: logger.error("message", exc_info=True)
+        """
+        info = ExceptionInfo.new()
+
+        self.assertEqual(info.type_name, None)
+        self.assertEqual(info.type, None)
+        self.assertEqual(info.exception, None)
+        self.assertEqual(info.exception_description, "")
+        self.assertEqual(info.traceback, None)
+        self.assertEqual(info.frames, ())
+        self.assertEqual(info.exception_attributes, ())
