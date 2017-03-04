@@ -1,0 +1,169 @@
+/**
+ * Colours:
+ *		- #E22C2C = red
+ *		- #EEAAAA = red (header logo & "search by Google" link)
+ *		- #FDF5CE = red (context code & listings of variables)
+ *		- #4B89B9 = blue
+ *		- #7FA64D = green
+ *		- #575757 = gray
+ *		- #BFBFBF = gray-lighten
+ *		- #F6F6F6 = silver
+ *		- #F0F0F0 = silver-dark
+ */
+html,
+body {
+	margin:0;
+	padding:0;
+	font-family:Verdana,sans-serif;
+}
+
+p {
+	margin:.5em 0 0;
+}
+
+a,
+h2,
+h3 {
+	color:#4B89B9;
+}
+
+a {
+	text-decoration:none;
+}
+
+/* un/fold signs */
+a abbr {
+	color:#BFBFBF;
+}
+
+/** header ********************************************************************/
+header {
+	display:block;
+	padding:.5em .5em .5em 8em;
+	background:#E22C2C url('python_logo.png') 0.5em 0.2em no-repeat;
+	color:#FFF;
+}
+
+header h1 {
+	margin:0.5em 0;
+}
+
+/* opener for panel with exception attributes */
+header h1 a,
+header h1 a:active,
+header h1 a:focus,
+header h1 a:hover {
+	color:#FFF;
+}
+
+header p {
+	margin:.8em 0;
+}
+
+/* invisible "search by Google" link */
+header p a,
+header p a:active,
+header p a:focus {
+	color:rgba(0, 0, 0, 0);
+}
+
+/* "search by Google" link - visible by hover */
+header p:hover a {
+	font-weight:bold;
+	color:#EEAAAA;
+}
+
+/** panels ********************************************************************/
+.panel {
+	margin:10px 15px;
+}
+
+/* link with path to file */
+a[href^=editor\:] {
+	color:#000;
+}
+
+/** listing of variables ******************************************************/
+dl {
+	margin:5px 0 0;
+	padding:.4em .8em;
+	border:1px dotted #F0F0F0;
+	background-color:#FDF5CE;
+	color:#000;
+	font-family:monospace;
+	overflow:auto;
+}
+
+dl.folded {
+	display:none;
+}
+
+dl dt {
+	font-weight:bold;
+}
+
+dl dd {
+	padding-bottom:.7em;
+}
+
+/** context code **************************************************************/
+pre {
+	margin:5px 0 10px;
+	border:1px dotted #F0F0F0;
+	background:#FDF5CE;
+	overflow:auto;
+}
+
+pre,
+code {
+	font:10pt/1.5 monospace;
+}
+
+pre code ol {
+	padding:0;
+	list-style-position:inside;
+	list-style-type:decimal-leading-zero;
+	color:#575757;
+}
+
+pre code ol li {
+	padding-left:.3em;
+}
+
+/* highlighted line */
+.clickable {
+	cursor:pointer;
+}
+
+pre code ol li.clickable,
+pre code ol li.clickable span {
+	color:#FFF;
+	font-weight:bold;
+	background-color:#E22C2C;
+}
+
+/* code has black colour but line numbers stay gray */
+pre code ol li span {
+	color:#000;
+}
+
+/* left border as delimiter between line numbers and code */
+pre code ol li span,
+pre code ol li.clickable span {
+	border-left:1px dashed #575757;
+}
+
+/* hide panels with locals/globals when parent panel is folded */
+.folded .frame-variables {
+	display:none;
+}
+
+/* hide context lines if panel is folded */
+.folded pre code ol li {
+	display:none;
+}
+
+/* show line of exception source */
+.folded pre code ol li.clickable {
+	display:list-item;
+}

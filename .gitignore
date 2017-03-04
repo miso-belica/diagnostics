@@ -6,5 +6,8 @@ __pycache__/
 # nosetests
 .coverage
 
+# IDE specific files
+.idea/
+
 # local directories
 /trash/
